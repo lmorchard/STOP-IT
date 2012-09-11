@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>STOP IT</title>
+        <style type="text/css">
+            #clips audio {
+                margin: 0.5em;
+            }
+            body {
+              text-align: center;
+            }
+            button {
+                background: url(static/bigred.png) no-repeat center center,
+                            -moz-linear-gradient(center top , #DB3E36, #8A1F1A) repeat scroll 0 0 transparent;
+                border-radius: 100%;
+                box-shadow: 0 12px 3px rgba(0, 0, 0, 0.2),
+                            0 6px 1px rgba(0, 0, 0, 0.8),
+                            0 2px 0 rgba(255, 255, 255, 0.5) inset,
+                            0 12px 48px rgba(255, 100, 16, 0.8) inset,
+                            0 -12px 0 rgba(0, 0, 0, 0.2) inset;
+                color: #FFFFFF;
+                margin-top: 1em;
+                border: 0;
+                display: block;
+                font-size: 48px;
+                height: 220px;
+                letter-spacing: -3px;
+                line-height: 52px;
+                outline: medium none;
+                text-align: center;
+                margin: 1em auto;
+                text-decoration: none;
+                text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+                text-transform: uppercase;
+                width: 220px;
+                position: relative;
+                cursor: pointer;
+            }
+            button span {
+                position: absolute;
+                display: block;
+                width: 217px;
+                height: 220px;
+                top: 50%;
+                margin-top: -0.8em;
+                left: 0;
+                z-index: 999;
+            }
+            button:before {
+                content: '';
+                display: block;
+                width: 217px;
+                height: 220px;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                border-radius: 100%;
+                -moz-transition: .7s box-shadow ease;
+                box-shadow: 0 0 transparent;
+            }
+            button:hover:before {
+                box-shadow: 0 0 50px red;
+            }
+            button:active {
+                border-radius: 100% 100% 100% 100%;
+                box-shadow: 0 12px 3px rgba(0, 0, 0, 0.2),
+                            0 2px 1px rgba(0, 0, 0, 0.8),
+                            0 2px 0 rgba(255, 255, 255, 0.5) inset,
+                            0 12px 48px rgba(255, 100, 16, 0.8) inset,
+                            0 -12px 0 rgba(0, 0, 0, 0.2) inset;
+                top: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="play" accesskey="p"><span>STOP IT</span></button>
+
+        <div id="clips"></div>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            var clips = [
+                "just-stop-it",
+                "s-t-o-p-new-word-i-t",
+                "stop-it-1",
+                "stop-it-2",
+                "stop-it-3",
+                "stop-it-4",
+                "stop-it-5",
+                "stop-it-6",
+                "stop-it-7",
+                "stop-it-laughter-1",
+                "stop-it-laughter-2",
+                "stop-it-laughter-3",
+                "stop-it-or-ill-bury-you-alive"
+                /*
+                "we-definitely-dont-go-there",
+                "we-dont-go-there-1",
+                "we-dont-go-there-either",
+                */
+            ];
+
+            // Load the clips...
+            $.each(clips, function (idx, name) {
+                $('#clips').append([
+                    '<audio id="clip-'+ name +'" controls preload>',
+                    '    <source src="clips/'+ name +'.mp3" type="audio/mpeg" />',
+                    '    <source src="clips/'+ name +'.ogg" type="audio/ogg" />',
+                    '</audio>'
+                ].join(''))
+            });
+
+            $('#play').click(function () {
+                var name = clips[Math.floor(Math.random() * clips.length)];
+                var id = '#clip-' + name;
+                console.log(id);
+                $('#clips audio').each(function () { 
+                    this.pause();
+                });
+                var clip = $(id)[0];
+                if (window.chrome) {
+                    clip.load();
+                } else {
+                    clip.currentTime = 0;
+                }
+                clip.play();
+                return false;
+            });
+
+        </script>
+    </body>
+</html>
