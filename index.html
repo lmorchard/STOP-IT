@@ -116,7 +116,6 @@
             $('#play').click(function () {
                 var name = clips[Math.floor(Math.random() * clips.length)];
                 var id = '#clip-' + name;
-                console.log(id);
                 $('#clips audio').each(function () { 
                     this.pause();
                 });
