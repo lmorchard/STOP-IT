@@ -11,166 +11,39 @@
     <meta property="og:url" content="http://lmorchard.github.com/STOP-IT/">
     <meta property="og:image" content="http://lmorchard.github.com/STOP-IT/img/stop-it.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <style type="text/css">
-      #clips {
-        display: none;
-      }
-      html, body {
-        height: 100%; margin: 0; padding: 0;
-      }
-      body {
-        text-align: center;
-      }
-      div#container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%; height: 100%;
-      }
-      button {
-        background: -moz-linear-gradient(center top , #DB3E36, #8A1F1A) repeat scroll 0 0 transparent;
-        border-radius: 100%;
-        box-shadow: 0 12px 3px rgba(0, 0, 0, 0.2),
-              0 6px 1px rgba(0, 0, 0, 0.8),
-              0 2px 0 rgba(255, 255, 255, 0.5) inset,
-              0 12px 48px rgba(255, 100, 16, 0.8) inset,
-              0 -12px 0 rgba(0, 0, 0, 0.2) inset;
-        color: #FFFFFF;
-        margin-top: 1em;
-        border: 0;
-        display: block;
-        font-size: 48px;
-        height: 220px;
-        letter-spacing: -1px;
-        line-height: 52px;
-        outline: medium none;
-        text-align: center;
-        margin: 1em auto;
-        text-decoration: none;
-        text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-        text-transform: uppercase;
-        width: 220px;
-        position: relative;
-        cursor: pointer;
-      }
-      button span {
-        position: absolute;
-        display: block;
-        width: 217px;
-        height: 220px;
-        top: 50%;
-        margin-top: -0.7em;
-        left: 0;
-        z-index: 999;
-      }
-      button:before {
-        content: '';
-        display: block;
-        width: 217px;
-        height: 220px;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        border-radius: 100%;
-        -moz-transition: .7s box-shadow ease;
-        box-shadow: 0 0 transparent;
-      }
-      button:hover:before {
-        box-shadow: 0 0 50px red;
-      }
-      button:active {
-        border-radius: 100% 100% 100% 100%;
-        box-shadow: 0 12px 3px rgba(0, 0, 0, 0.2),
-              0 2px 1px rgba(0, 0, 0, 0.8),
-              0 2px 0 rgba(255, 255, 255, 0.5) inset,
-              0 12px 48px rgba(255, 100, 16, 0.8) inset,
-              0 -12px 0 rgba(0, 0, 0, 0.2) inset;
-        top: 4px;
-      }
-    </style>
+    <link href="index.css" rel="stylesheet" type="text/css">
   </head>
   <body>
 
-    <div id="container">
+    <div id="titleBar">
+      <h1>Bob Newhart says "Stop it!"</h1>
+      <button id="help"><span>?</span></button>
+    </div>
+
+    <div id="buttonContainer">
       <button id="play" accesskey="p"><span>STOP IT</span></button>
+    </div>
+
+    <div id="helpContainer">
+
+      <h2>What is this?</h2>
+      <p>This is a single-button soundboard playing clips of Bob Newhart saying "STOP IT!"</p>
+
+      <h2>Why is this?</h2>
+      <p>Because I thought <a href="https://www.youtube.com/watch?v=Ow0lr63y4Mw">this Mad TV sketch</a> was really funny, and I wanted to play with audio on the web.</p>
+      <p>Also, there were already plenty of fart apps.</p>
+
+      <h2>Can I fork this?</h2>
+      <p>Sure, go ahead and <a href="https://github.com/lmorchard/STOP-IT">fork this on GitHub!</a></p>
+
+      <h2>Who are you?</h2>
+      <p>I am <a href="http://lmorchard.com">Les Orchard</a> - {web,mad,computer} scientist; {tech,scifi} writer; home{brew,roast}er; mozillian.</p>
+
     </div>
 
     <div id="clips"></div>
 
-    <!--
-    <iframe width="420" height="315" src="http://www.youtube.com/embed/Ow0lr63y4Mw" frameborder="0" allowfullscreen></iframe>
+    <script src="index.js" type="text/javascript"></script>
 
-    <a href="https://github.com/lmorchard/STOP-IT"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-    -->
-
-    <script type="text/javascript">
-
-      var clips = [
-        "just-stop-it",
-        "s-t-o-p-new-word-i-t",
-        "stop-it-1",
-        "stop-it-2",
-        "stop-it-3",
-        "stop-it-4",
-        "stop-it-5",
-        "stop-it-6",
-        "stop-it-7",
-        "stop-it-laughter-1",
-        "stop-it-laughter-2",
-        "stop-it-laughter-3",
-        "stop-it-or-ill-bury-you-alive"//,
-        //"we-definitely-dont-go-there",
-        //"we-dont-go-there-1",
-        //"we-dont-go-there-either"
-      ];
-
-      var contentTypes = [
-        ['mp3', 'audio/mpeg'],
-        ['ogg', 'audio/ogg']
-      ];
-
-      // Load the clips...
-      var clipsEl = document.getElementById('clips');
-
-      clips.forEach(function (name) {
-
-        var audioEl = document.createElement('audio');
-        audioEl.id = 'clip-' + name;
-        audioEl.preload = true;
-
-        contentTypes.forEach(function (pair) {
-          var sourceEl = document.createElement('source');
-          sourceEl.src = 'clips/' + name + '.' + pair[0];
-          sourceEl.type = pair[1];
-          audioEl.appendChild(sourceEl);
-        });
-
-        clipsEl.appendChild(audioEl);
-
-      });
-
-      var playButtonEl = document.getElementById('play');
-      playButtonEl.addEventListener('click', function () {
-
-        var allClips = document.querySelectorAll('#clips audio');
-        for (var idx = 0; idx < allClips.length; idx++) {
-          allClips[idx].pause();
-        }
-
-        var name = clips[Math.floor(Math.random() * clips.length)];
-        var clipEl = document.getElementById('clip-' + name);
-
-        if (window.chrome) {
-          clipEl.load();
-        } else {
-          clipEl.currentTime = 0;
-        }
-
-        clipEl.play();
-        return false;
-
-      });
-
-    </script>
   </body>
 </html>

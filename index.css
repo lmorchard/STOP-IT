@@ -1,0 +1,122 @@
+#clips {
+  display: none;
+}
+html, body {
+  height: 100%; margin: 0; padding: 0;
+}
+body {
+  text-align: center;
+  font-family: sans-serif;
+}
+#titleBar {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 50px;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#titleBar h1 {
+  font-size: 1em;
+}
+#titleBar button#help {
+  position: absolute;
+  right: 0; top: 0;
+  border: none;
+  border-left: 1px solid #fff;
+  background-color: #ddd;
+  width: 50px; height: 50px;
+  font-size: 1em;
+  font-weight: bold;
+}
+#buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; height: 100%;
+}
+button#play {
+  background: -moz-linear-gradient(center top , #DB3E36, #8A1F1A) repeat scroll 0 0 transparent;
+  border-radius: 100%;
+  box-shadow: 0 12px 3px rgba(0, 0, 0, 0.2),
+    0 6px 1px rgba(0, 0, 0, 0.8),
+    0 2px 0 rgba(255, 255, 255, 0.5) inset,
+    0 12px 48px rgba(255, 100, 16, 0.8) inset,
+    0 -12px 0 rgba(0, 0, 0, 0.2) inset;
+  color: #FFFFFF;
+  margin-top: 1em;
+  border: 0;
+  display: block;
+  font-size: 48px;
+  height: 220px;
+  letter-spacing: -1px;
+  line-height: 52px;
+  outline: medium none;
+  text-align: center;
+  margin: 1em auto;
+  text-decoration: none;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  width: 220px;
+  position: relative;
+  cursor: pointer;
+}
+button#play span {
+  position: absolute;
+  display: block;
+  width: 217px;
+  height: 220px;
+  top: 50%;
+  margin-top: -0.7em;
+  left: 0;
+  z-index: 999;
+}
+button#play:before {
+  content: '';
+  display: block;
+  width: 217px;
+  height: 220px;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 100%;
+  -moz-transition: .7s box-shadow ease;
+  box-shadow: 0 0 transparent;
+}
+button#play:hover:before {
+  box-shadow: 0 0 50px red;
+}
+button#play:active {
+  border-radius: 100% 100% 100% 100%;
+  box-shadow: 0 12px 3px rgba(0, 0, 0, 0.2),
+    0 2px 1px rgba(0, 0, 0, 0.8),
+    0 2px 0 rgba(255, 255, 255, 0.5) inset,
+    0 12px 48px rgba(255, 100, 16, 0.8) inset,
+    0 -12px 0 rgba(0, 0, 0, 0.2) inset;
+  top: 4px;
+}
+
+#helpContainer {
+  display: none;
+  position: absolute;
+  left: 0; top: 50px; right: 0; bottom: 0;
+  padding: 2em;
+  background-color: rgba(192,192,192,0.9);
+  z-index: 9999;
+}
+body.help #helpContainer {
+  display: block;
+}
+body.help #titleBar button#help {
+  overflow: hidden;
+}
+body.help #titleBar button#help span {
+  visibility: hidden;
+}
+body.help #titleBar button#help span:after {
+  content: "X";
+  visibility: visible;
+  margin-left: -0.5em;
+}
