@@ -6,16 +6,26 @@
   <head>
     <title>Bob Newhart says, STOP IT!</title>
     <link rel="icon" href="img/stop-it.png" type="image/png">
+    <meta charset="UTF-8">
     <meta property="og:title" content="Bob Newhart says, STOP IT!">
     <meta property="og:url" content="http://lmorchard.github.com/STOP-IT/">
     <meta property="og:image" content="http://lmorchard.github.com/STOP-IT/img/stop-it.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <style type="text/css">
-      #clips audio {
-        margin: 0.5em;
+      #clips {
+        display: none;
+      }
+      html, body {
+        height: 100%; margin: 0; padding: 0;
       }
       body {
         text-align: center;
+      }
+      div#container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%; height: 100%;
       }
       button {
         background: -moz-linear-gradient(center top , #DB3E36, #8A1F1A) repeat scroll 0 0 transparent;
@@ -31,7 +41,7 @@
         display: block;
         font-size: 48px;
         height: 220px;
-        letter-spacing: -3px;
+        letter-spacing: -1px;
         line-height: 52px;
         outline: medium none;
         text-align: center;
@@ -49,7 +59,7 @@
         width: 217px;
         height: 220px;
         top: 50%;
-        margin-top: -0.8em;
+        margin-top: -0.7em;
         left: 0;
         z-index: 999;
       }
@@ -80,16 +90,21 @@
     </style>
   </head>
   <body>
-    <button id="play" accesskey="p"><span>STOP IT</span></button>
+
+    <div id="container">
+      <button id="play" accesskey="p"><span>STOP IT</span></button>
+    </div>
 
     <div id="clips"></div>
 
+    <!--
     <iframe width="420" height="315" src="http://www.youtube.com/embed/Ow0lr63y4Mw" frameborder="0" allowfullscreen></iframe>
 
     <a href="https://github.com/lmorchard/STOP-IT"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    -->
 
-    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
+
       var clips = [
         "just-stop-it",
         "s-t-o-p-new-word-i-t",
@@ -103,36 +118,57 @@
         "stop-it-laughter-1",
         "stop-it-laughter-2",
         "stop-it-laughter-3",
-        "stop-it-or-ill-bury-you-alive",
-        "we-definitely-dont-go-there",
-        "we-dont-go-there-1",
-        "we-dont-go-there-either"
+        "stop-it-or-ill-bury-you-alive"//,
+        //"we-definitely-dont-go-there",
+        //"we-dont-go-there-1",
+        //"we-dont-go-there-either"
+      ];
+
+      var contentTypes = [
+        ['mp3', 'audio/mpeg'],
+        ['ogg', 'audio/ogg']
       ];
 
       // Load the clips...
-      $.each(clips, function (idx, name) {
-        $('#clips').append([
-          '<audio id="clip-'+ name +'" controls preload>',
-          '  <source src="clips/'+ name +'.mp3" type="audio/mpeg" />',
-          '  <source src="clips/'+ name +'.ogg" type="audio/ogg" />',
-          '</audio>'
-        ].join(''))
+      var clipsEl = document.getElementById('clips');
+
+      clips.forEach(function (name) {
+
+        var audioEl = document.createElement('audio');
+        audioEl.id = 'clip-' + name;
+        audioEl.preload = true;
+
+        contentTypes.forEach(function (pair) {
+          var sourceEl = document.createElement('source');
+          sourceEl.src = 'clips/' + name + '.' + pair[0];
+          sourceEl.type = pair[1];
+          audioEl.appendChild(sourceEl);
+        });
+
+        clipsEl.appendChild(audioEl);
+
       });
 
-      $('#play').click(function () {
-        var name = clips[Math.floor(Math.random() * clips.length)];
-        var id = '#clip-' + name;
-        $('#clips audio').each(function () {
-          this.pause();
-        });
-        var clip = $(id)[0];
-        if (window.chrome) {
-          clip.load();
-        } else {
-          clip.currentTime = 0;
+      var playButtonEl = document.getElementById('play');
+      playButtonEl.addEventListener('click', function () {
+
+        var allClips = document.querySelectorAll('#clips audio');
+        for (var idx = 0; idx < allClips.length; idx++) {
+          allClips[idx].pause();
         }
-        clip.play();
+
+        var name = clips[Math.floor(Math.random() * clips.length)];
+        var clipEl = document.getElementById('clip-' + name);
+
+        if (window.chrome) {
+          clipEl.load();
+        } else {
+          clipEl.currentTime = 0;
+        }
+
+        clipEl.play();
         return false;
+
       });
 
     </script>
