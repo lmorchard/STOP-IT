@@ -17,6 +17,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 99999;
 }
 #titleBar h1 {
   font-size: 1em;
@@ -101,7 +102,7 @@ button#play:active {
 #helpContainer {
   display: none;
   position: absolute;
-  left: 0; top: 50px; right: 0; bottom: 0;
+  left: 0; top: 50px; 
   padding: 2em;
   background-color: rgba(192,192,192,0.9);
   z-index: 9999;

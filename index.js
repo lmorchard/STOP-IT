@@ -28,15 +28,10 @@ var clipsEl = document.getElementById('clips');
 clips.forEach(function (name) {
 
   var audioEl = document.createElement('audio');
-  audioEl.id = 'clip-' + name;
-  audioEl.preload = true;
-
-  contentTypes.forEach(function (pair) {
-    var sourceEl = document.createElement('source');
-    sourceEl.src = 'clips/' + name + '.' + pair[0];
-    sourceEl.type = pair[1];
-    audioEl.appendChild(sourceEl);
-  });
+  audioEl.setAttribute('id', 'clip-' + name);
+  audioEl.setAttribute('preload', 'auto');
+  audioEl.src = '/clips/' + name + '.mp3';
+  audioEl.mozAudioChannelType = 'content';
 
   clipsEl.appendChild(audioEl);
 
