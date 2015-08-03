@@ -1,0 +1,14 @@
+{
+  "name": "STOP IT",
+  "description": "A single-button soundboard of Bob Newhart saying STOP IT!",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "Les Orchard",
+    "url": "http://lmorchard.com"
+  },
+  "default_locale": "en",
+  "icons": {
+    "128": "/img/stop-it-128.png",
+    "256": "/img/stop-it.png"
+  }
+}
